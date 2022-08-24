@@ -28,11 +28,9 @@ def reveal_question(q):
         question_options = surveys['personality'].questions[personality_q].choices
         return render_template('question.html', user_question=user_question, question_options=question_options)
     else:
-        return render_template('thanks.html')
+        return render_template('thanks.html', satisfaction_answers=satisfaction_answers, personality_answers=personality_answers)
         
 
-    
-    
 @app.route('/answer', methods=["POST"])
 def store_answer():
     user_answer = request.form['user_answer']

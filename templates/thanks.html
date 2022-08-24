@@ -2,4 +2,12 @@
 
 {% block content %}
 done!
+<br>
+your answers: 
+{% for answer in satisfaction_answers %}
+{{answer}}
+{% endfor %}
+{% for answer in personality_answers%}
+{{answer}}
+{% endfor %}
 {% endblock %}
