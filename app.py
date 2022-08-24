@@ -19,13 +19,18 @@ def survey_welcome():
 def reveal_question(q):
     satisfaction_q = len(satisfaction_answers)
     personality_q = len(personality_answers)
-    if satisfaction_q <= 4:
+    if satisfaction_q < 4:
         user_question = surveys['satisfaction'].questions[satisfaction_q].question
         question_options = surveys['satisfaction'].questions[satisfaction_q].choices
-    
-    
+        return render_template('question.html', user_question=user_question, question_options=question_options)
+    elif personality_q < 4:
+        user_question = surveys['personality'].questions[personality_q].question
+        question_options = surveys['personality'].questions[personality_q].choices
+        return render_template('question.html', user_question=user_question, question_options=question_options)
+    else:
+        return render_template('thanks.html')
         
-    return render_template('question.html', user_question=user_question, question_options=question_options)
+
     
     
 @app.route('/answer', methods=["POST"])
@@ -34,4 +39,8 @@ def store_answer():
     if len(satisfaction_answers) < 4:
         satisfaction_answers.append(user_answer)
         q = len(satisfaction_answers)+1
+        return redirect(f'/question/{q}')
+    elif len(personality_answers) < 4:
+        personality_answers.append(user_answer)
+        q = len(satisfaction_answers)+ len(personality_answers) +1
         return redirect(f'/question/{q}')
